@@ -1,0 +1,108 @@
+/* Set overall background color for the entire page */
+
+/* Reset default margins and paddings for other elements */
+body{
+    margin: 0;
+    padding: 0;
+    background-color:#2A1E2F !important;
+}
+
+/* Make sure the navbar takes up the full width */
+header {
+    background-color: #2A1E2F;
+    padding: 10px 0;
+    width: 100%; /* Ensure the header takes full width */
+}
+
+
+/* Remove any padding/margin from the <ul> */
+nav ul {
+    display: flex; /* Ensures items are in a row */
+    justify-content: center; /* Centers the items horizontally */
+    list-style: none; /* Removes the default list style */
+    padding: 0;
+    margin: 0; /* Ensure no margin around the <ul> */
+    width: 100%; /* Make the ul take up full width */
+    
+}
+
+/* Ensure no extra space around <li> */
+nav ul li {
+    text-align: center; /* Center the text in each item */
+}
+
+/* Style the links and apply the Hubot Sans font */
+nav ul li a {
+    display: block;
+    color: #CF4F50; /* White text */
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 18px;
+    font-family: "Hubot Sans", sans-serif; /* Apply the Hubot Sans font */
+    font-optical-sizing: auto;
+    font-weight: 400; /* Normal font weight */
+    font-variation-settings: "wdth" 100;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+}
+
+/* Add hover effect to links */
+nav ul li a:hover {
+    color: #E2524E; /* Change text color on hover */
+    height: 100%;
+    font-weight: bold;
+}
+
+.separator {
+    width: 90%; /* Adjust width to control the length */
+    height: 4px; /* Thickness of the line */
+    background-color: #CF4F50; /* Color of the line */
+    margin: 10px auto; /* Center the line */
+    border-radius: 10px; /* Optional: rounded edges */
+    box-shadow: 0px 8px 6px rgba(0, 0, 0, 0.2); /* Drop shadow */
+}
+/* Footer Styles */
+footer {
+    background-color: #CF4F50; 
+    text-align: center;
+    padding: 20px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+footer ul li a{
+    color: #F6F5F5;
+    font-family: Helvetica, sans-serif;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column; /* Stack the items vertically on smaller screens */
+    }
+
+    nav ul li {
+        flex: none; /* Remove the equal width for each item on small screens */
+    }
+}
+
+/* Remove fixed height from content-box */
+.content-box {
+    width: 100%; /* Allow full width in column */
+    max-width: 100%; /* Cap width at 100% for responsiveness */
+    margin: 20px 20px 20px 0;
+    padding: 20px;
+    background-color: #CF4F50;
+    border: 1px solid #CF4F50;
+    border-radius: 10px;
+    color: #F6F5F5;
+    font-family: Helvetica, sans-serif;
+    box-shadow: 0px 8px 6px rgba(0, 0, 0, 0.2); /* Drop shadow */
+}
+
+/* Ensure row takes minimum vertical space */
+.row {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+    align-items: flex-start; /* Align items at the top of the row */
+}
