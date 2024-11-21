@@ -1,15 +1,16 @@
 /* Set overall background color for the entire page */
 
 /* Reset default margins and paddings for other elements */
-body{
+body {
     margin: 0;
     padding: 0;
-    background-color:#2A1E2F !important;
+    background-color: black !important;
 }
+
 
 /* Make sure the navbar takes up the full width */
 header {
-    background-color: #2A1E2F;
+    background-color: black;
     padding: 10px 0;
     width: 100%; /* Ensure the header takes full width */
 }
@@ -34,7 +35,7 @@ nav ul li {
 /* Style the links and apply the Hubot Sans font */
 nav ul li a {
     display: block;
-    color: #CF4F50; /* White text */
+    color: #ffffff; /* White text */
     padding: 10px 15px;
     text-decoration: none;
     font-size: 18px;
@@ -48,7 +49,7 @@ nav ul li a {
 
 /* Add hover effect to links */
 nav ul li a:hover {
-    color: #E2524E; /* Change text color on hover */
+    color: #ae2727; /* Change text color on hover */
     height: 100%;
     font-weight: bold;
 }
@@ -56,14 +57,14 @@ nav ul li a:hover {
 .separator {
     width: 90%; /* Adjust width to control the length */
     height: 4px; /* Thickness of the line */
-    background-color: #CF4F50; /* Color of the line */
+    background-color: #1f1f1f; /* Color of the line */
     margin: 10px auto; /* Center the line */
     border-radius: 10px; /* Optional: rounded edges */
     box-shadow: 0px 8px 6px rgba(0, 0, 0, 0.2); /* Drop shadow */
 }
 /* Footer Styles */
 footer {
-    background-color: #CF4F50; 
+    background-color: #1f1f1f; 
     text-align: center;
     padding: 20px 0;
     position: fixed;
@@ -86,18 +87,20 @@ footer ul li a{
     }
 }
 
-/* Remove fixed height from content-box */
-.content-box {
-    width: 100%; /* Allow full width in column */
-    max-width: 100%; /* Cap width at 100% for responsiveness */
-    margin: 20px 20px 20px 0;
-    padding: 20px;
-    background-color: #CF4F50;
-    border: 1px solid #CF4F50;
-    border-radius: 10px;
-    color: #F6F5F5;
-    font-family: Helvetica, sans-serif;
-    box-shadow: 0px 8px 6px rgba(0, 0, 0, 0.2); /* Drop shadow */
+.card-custom-education, .card-custom-experience, .card-custom-skills, .card-custom-picture {
+    background-color: #1f1f1f !important; /* Light grey */
+    color: white !important; /* Change text color for readability */
+}
+
+.card h5 {
+    color: white;
+}
+
+.card.card-custom-education h6, 
+.card.card-custom-experience h6, 
+.card.card-custom-picture h6, 
+.card.card-custom-skills h6 {
+    color: white !important;
 }
 
 /* Ensure row takes minimum vertical space */
@@ -105,4 +108,233 @@ footer ul li a{
     display: flex;
     flex-wrap: wrap; /* Allow items to wrap on smaller screens */
     align-items: flex-start; /* Align items at the top of the row */
+}
+
+.row:first-child .card {
+    display: flex;
+    flex-direction: column; /* Ensures proper layout for card content */
+    height: 100%; /* Allows cards to fill the available height */
+}
+
+/* Make all columns stretch to the same height */
+.row:first-child {
+    display: flex; /* Enable Flexbox for the row */
+    align-items: stretch; /* Stretch items to match the tallest one */
+}
+
+.row:first-child .col-md-4 {
+    display: flex; /* Enable Flexbox for columns */
+    flex-direction: column; /* Ensures card content flows correctly */
+}
+
+
+/* Project Section */
+.projects-section {
+    background-color: black; /* Background color of the section */
+    padding: 50px 0;
+    color: white;
+    width: 100%;
+}
+
+/* Project Card */
+/* Project Card Animation */
+.project-card {
+    display: flex;
+    justify-content: space-between;
+    width: 90%; /* Match the width of skills card */
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: #1f1f1f; /* Dark grey background */
+    border-radius: 10px;
+    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    opacity: 0; /* Initially hidden */
+    transform: translateY(50px); /* Position the card slightly down */
+    transition: opacity 1s ease-out, transform 1s ease-out; /* Smooth transition */
+}
+
+/* Add this class to trigger the fade-in effect when in view */
+.project-card.in-view {
+    opacity: 1;
+    transform: translateY(0); /* Move to the original position */
+}
+
+
+/* Left Side: Project Details */
+.project-details {
+    width: 50%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.project-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.project-description {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.project-collaborators {
+    font-size: 14px;
+    font-style: italic;
+    margin-top: auto; /* Push the collaborators to the bottom if content is short */
+}
+
+/* Right Side: Slideshow */
+.project-slideshow {
+    width: 50%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.project-slideshow img {
+    display: none;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Scale images proportionally */
+}
+
+.project-slideshow img.active {
+    display: block;
+}
+
+.project-slideshow .prev-slide,
+.project-slideshow .next-slide {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    font-size: 20px;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.project-slideshow .prev-slide {
+    left: 10px;
+}
+
+.project-slideshow .next-slide {
+    right: 10px;
+}
+
+.project-slideshow .prev-slide:hover,
+.project-slideshow .next-slide:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+    color: black;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .project-card {
+        flex-direction: column; /* Stack items vertically on smaller screens */
+    }
+
+    .project-details, .project-slideshow {
+        width: 100%;
+    }
+
+    .project-details {
+        padding: 15px;
+    }
+
+    .project-slideshow {
+        height: 200px; /* Adjust for smaller screens */
+    }
+}
+
+.card-custom-travel {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #1f1f1f !important; /* Light green background */
+    color: white !important
+}
+
+.card-custom-travel .row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card-custom-travel .col-md-4 {
+    display: flex;
+    justify-content: center;
+}
+
+.card-custom-travel .col-md-4 img, 
+.card-custom-travel .col-md-4 video {
+    /* Force uniform height for images and videos */
+    object-fit: cover; /* Ensures aspect ratio is preserved */
+    width: 100%;
+    height: 250px; /* Fixed height for uniformity */
+    border-radius: 5px; /* Optional: round the edges */
+    transition: transform 0.3s ease-in-out; /* Smooth transition on hover */
+}
+
+/* Hover effect for expanding */
+.card-custom-travel .col-md-4 img:hover, 
+.card-custom-travel .col-md-4 video:hover {
+    transform: scale(1.2); /* Scale up by 20% */
+    z-index: 1; /* Ensure the expanded item is above others */
+}
+
+
+/* Initial state: elements are invisible */
+.card-custom-education,
+.card-custom-experience,
+.card-custom-skills,
+.card-custom-picture,
+.card-custom-travel {
+    opacity: 0;
+    transform: translateY(50px); /* Optional: makes it slide up */
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+/* When the element is in view, it will fade in */
+.card-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+.card-custom-contact {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #1f1f1f !important;
+    color: white !important;
+}
+
+.card-custom-contact .form-label {
+    font-weight: bold;
+}
+
+.card-custom-contact .btn {
+    font-size: 1.1rem;
+    color: white;
+    background-color: #1f1f1f; /* Original background color */
+    border: none;
+    transition: background-color 0.3s ease; /* Add transition for smooth hover effect */
+}
+
+.card-custom-contact .btn:hover {
+    background-color: #ae2727; /* New color on hover (you can choose any color you like) */
+    color: white; /* Ensure text remains white */
+}
+
+footer .text-decoration-none {
+    color: white;
 }
