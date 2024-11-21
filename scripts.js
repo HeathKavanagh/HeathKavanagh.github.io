@@ -78,3 +78,13 @@ document.addEventListener("DOMContentLoaded", function () {
       observer.observe(card);
   });
 });
+
+// Wait for the DOM to be fully loaded
+document.addEventListener("DOMContentLoaded", function() {
+  const contactForm = document.querySelector('.contact-form');
+
+  // Add the 'visible' class to the contact form after a short delay for the fade-in effect
+  setTimeout(() => {
+      contactForm.classList.add('visible');
+  }, 100); // Delay to trigger the fade-in effect
+});

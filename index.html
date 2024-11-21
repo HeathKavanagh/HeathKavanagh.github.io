@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Heaths' ePortfolio</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,18 +19,18 @@
     <header>
         <nav>
             <ul class="d-flex list-unstyled p-0 m-0">
-                <li class="flex-fill text-center"><a href="index.html" class="text-decoration-none">Home</a></li>
-                <li class="flex-fill text-center"><a href="about.html" class="text-decoration-none">About</a></li>
-                <li class="flex-fill text-center"><a href="projects.html" class="text-decoration-none">Projects</a></li>
-                <li class="flex-fill text-center"><a href="photography.html" class="text-decoration-none">Photography</a></li>
-                <li class="flex-fill text-center"><a href="contact.html" class="text-decoration-none">Contact</a></li>
+                <li class="flex-fill text-center"><a href="#education" class="text-decoration-none">Home</a></li>
+                <li class="flex-fill text-center"><a href="#about" class="text-decoration-none">About</a></li>
+                <li class="flex-fill text-center"><a href="#projects" class="text-decoration-none">Projects</a></li>
+                <li class="flex-fill text-center"><a href="#Travel" class="text-decoration-none">Photography</a></li>
+                <li class="flex-fill text-center"><a href="#contact" class="text-decoration-none">Contact</a></li>
             </ul>
         </nav>
         <div class="separator"></div>
     </header>
 
     <main>
-        <section class="container mt-5">
+        <section class="container mt-5" id="about">
             <!-- Row for Education, Picture, and Experiences -->
             <div class="row">
                 <!-- Education Card -->
@@ -81,7 +85,7 @@
             </div>
         </section>
 
-        <section class="projects-section">
+        <section class="projects-section" id="projects">
             <div class="project-card d-flex">
                 <!-- Left Side: Project Details -->
                 <div class="project-details">
@@ -132,8 +136,10 @@ Finally, in endless you are given an endless stream of words, keeping you learni
         <section id="Travel" class="container mt-5">
             <div class="card card-custom-travel">
                 <div class="card-body">
-                    <h2 class="card-title text-center mb-4">Travel 🌋</h2>
-                    <p class="card-text text-center">A gallery of my favorite shots, capturing the diverse beauty of the world around us.</p>
+                    <h2 class="card-title text-center mb-4">Photography 🌋</h2>
+                    <p class="card-text text-center">
+                        A <a href="https://www.picdrop.com/heathkavanagh/ARFmbFA2vH?client=" class="text-decoration-none">gallery</a> of my favorite shots, capturing the diverse beauty of the world around us.
+                    </p>
                     <div class="row">
                         <!-- Photo Grid -->
                         <div class="col-md-4 mb-4">
@@ -180,7 +186,7 @@ Finally, in endless you are given an endless stream of words, keeping you learni
                     <h2 class="card-title text-center mb-4">Contact Me 📧</h2>
                     <p class="card-text text-center mb-4">Feel free to reach out with any questions or comments!</p>
         
-                    <form action="https://formspree.io/f/mzzbvkzo" method="POST">
+                    <form action="https://formspree.io/f/mzzbvkzo" method="POST" class="contact-form">
                         <div class="mb-3">
                             <label for="name" class="form-label">Your Name:</label>
                             <input type="text" class="form-control" id="name" name="name" placeholder="Your name" required>
@@ -198,6 +204,8 @@ Finally, in endless you are given an endless stream of words, keeping you learni
                 </div>
             </div>
         </section>
+        
+        <div class="container custom-container"></div>
         
         
 
