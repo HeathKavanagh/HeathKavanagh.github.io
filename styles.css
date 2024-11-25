@@ -312,7 +312,6 @@ footer ul li a{
     transform: translateY(0);
 }
 
-
 .card-custom-contact {
     max-width: 600px;
     margin: 0 auto;
@@ -321,7 +320,16 @@ footer ul li a{
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: #1f1f1f !important;
     color: white !important;
+
+    opacity: 0; /* Initially hidden */
+    transition: opacity 1s ease-in; /* Smooth fade-in */
 }
+
+/* When the card is visible */
+.card-custom-contact.visible {
+    opacity: 1;
+}
+
 
 .card-custom-contact .form-label {
     font-weight: bold;
@@ -343,18 +351,6 @@ footer ul li a{
 footer .text-decoration-none {
     color: white;
     font-family: "Hubot Sans", sans-serif; /* Apply the Hubot Sans font */
-}
-
-/* Initial state: hidden with zero opacity */
-.contact-form {
-    opacity: 0;
-    transition: opacity 1s ease-in;
-    font-family: "Hubot Sans", sans-serif; /* Apply the Hubot Sans font */
-}
-
-/* When the form is visible, set opacity to 1 */
-.contact-form.visible {
-    opacity: 1;
 }
 
 .custom-container {

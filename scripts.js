@@ -79,12 +79,21 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-// Wait for the DOM to be fully loaded
-document.addEventListener("DOMContentLoaded", function() {
-  const contactForm = document.querySelector('.contact-form');
+document.addEventListener("DOMContentLoaded", () => {
+  const contactCard = document.querySelector(".card-custom-contact");
 
-  // Add the 'visible' class to the contact form after a short delay for the fade-in effect
-  setTimeout(() => {
-      contactForm.classList.add('visible');
-  }, 100); // Delay to trigger the fade-in effect
+  const observer = new IntersectionObserver(
+      ([entry]) => {
+          if (entry.isIntersecting) {
+              contactCard.classList.add("visible");
+          }
+      },
+      {
+          root: null, // Use the viewport
+          threshold: 0.1, // Trigger when 10% of the card is visible
+      }
+  );
+
+  observer.observe(contactCard);
 });
+
