@@ -1,11 +1,34 @@
 /* Set overall background color for the entire page */
 
 /* Reset default margins and paddings for other elements */
+/* ...Your existing CSS... */
+
+/* Remove default margin/padding and set black fallback background */
 body {
     margin: 0;
     padding: 0;
     background-color: black !important;
+    font-family: "Hubot Sans", sans-serif;
 }
+
+body {
+    cursor: url("pictures\cursor.png"), auto;
+  }
+  
+
+/* Canvas filling the entire screen behind content */
+#starsCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;  /* Send the canvas behind other elements */
+}
+
+
+/* ...All of your previous styles remain unchanged... */
+
 
 
 /* Make sure the navbar takes up the full width */
@@ -63,14 +86,17 @@ nav ul li a:hover {
     box-shadow: 0px 8px 6px rgba(0, 0, 0, 0.2); /* Drop shadow */
 }
 /* Footer Styles */
+/* Example: Keep footer at bottom if desired, or remove position: fixed;
+   If you want normal scrolling, you may not want it to be fixed. */
 footer {
     background-color: #1f1f1f; 
     text-align: center;
     padding: 20px 0;
-    position: fixed;
+    /* position: fixed;   <-- remove or modify based on your layout */
     width: 100%;
     bottom: 0;
 }
+
 footer ul li a{
     color: #F6F5F5;
     font-family: Helvetica, sans-serif;
@@ -133,11 +159,12 @@ footer ul li a{
 
 /* Project Section */
 .projects-section {
-    background-color: black; /* Background color of the section */
+    /* Remove the black background: */
+    background-color: transparent !important;
     padding: 50px 0;
     color: white;
     width: 100%;
-    font-family: "Hubot Sans", sans-serif; /* Apply the Hubot Sans font */
+    font-family: "Hubot Sans", sans-serif; /* Keep your font style */
 }
 
 /* Project Card */
@@ -380,3 +407,21 @@ footer a::after, footer div > span::after {
 footer a:hover::after, footer div > span:hover::after {
     width: 100%; /* Expand underline fully on hover */
 }
+
+/* This is optional if you want the Three.js scene to occupy the full viewport */
+#threeCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2; /* 3D object on top or behind, depending on your preference */
+    pointer-events: none; /* so it doesn't block clicks (optional) */
+  }
+  
+#guard {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80px;  /* Example size, adjust as you wish */
+    height: 80px; /* Example size, adjust as you wish */
+    pointer-events: none; /* So it doesn't block clicks */
+  }
