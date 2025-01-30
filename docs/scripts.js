@@ -142,7 +142,149 @@ function drawShootingStars() {
   }
 }
 
-/** Main animation loop */
+// Fiery meteors
+let FIERY_METEORS = [];
+let METEOR_PARTICLES = [];
+let METEOR_SPAWN_CHANCE = 0.001;
+let METEOR_SPARKS = [];
+
+function spawnFieryMeteor() {
+  const fromTop = Math.random() < 0.5;
+  
+  let startX, startY, speedX, speedY;
+  
+  if (fromTop) {
+    startX = Math.random() * w;
+    startY = -100;
+    speedX = (Math.random() - 0.5) * 4;
+    speedY = Math.random() * 3 + 3;
+  } else {
+    startX = -100;
+    startY = Math.random() * (h * 0.7);
+    speedX = Math.random() * 3 + 3;
+    speedY = Math.random() * 2 + 1;
+  }
+
+  FIERY_METEORS.push({
+    x: startX,
+    y: startY,
+    speedX: speedX,
+    speedY: speedY,
+    length: Math.random() * 100 + 150,
+    alpha: 1.0,
+    fadeSpeed: Math.random() * 0.004 + 0.003
+  });
+}
+
+function updateFieryMeteors() {
+  for (let i = FIERY_METEORS.length - 1; i >= 0; i--) {
+    const m = FIERY_METEORS[i];
+
+    m.x += m.speedX;
+    m.y += m.speedY;
+    m.alpha -= m.fadeSpeed;
+
+    spawnMeteorSparks(m);
+
+    if (m.alpha <= 0 || m.x < -200 || m.x > w + 200 || m.y > h + 200) {
+      FIERY_METEORS.splice(i, 1);
+    }
+  }
+}
+
+function spawnMeteorSparks(meteor) {
+  const sparkCount = Math.floor(Math.random() * 3 + 3);
+
+  for (let i = 0; i < sparkCount; i++) {
+    const angle = Math.random() * 2 * Math.PI;
+    const speed = Math.random() * 2 + 1;
+
+    // Random spark colors: red, orange, yellow, and white
+    const colors = ["rgba(255, 50, 50, 1)", "rgba(255, 100, 0, 1)", "rgba(255, 200, 50, 1)", "rgb(42, 42, 35)"];
+    const sparkColor = colors[Math.floor(Math.random() * colors.length)];
+
+    METEOR_SPARKS.push({
+      x: meteor.x,
+      y: meteor.y,
+      vx: Math.cos(angle) * speed + meteor.speedX * 0.3, 
+      vy: Math.sin(angle) * speed + meteor.speedY * 0.3, 
+      alpha: 1,
+      fadeSpeed: 0.02 + Math.random() * 0.02,
+      size: Math.random() * 4 + 3,
+      color: sparkColor
+    });
+  }
+}
+
+function updateMeteorSparks() {
+  for (let i = METEOR_SPARKS.length - 1; i >= 0; i--) {
+    const s = METEOR_SPARKS[i];
+
+    s.x += s.vx;
+    s.y += s.vy;
+    s.alpha -= s.fadeSpeed;
+
+    if (s.alpha <= 0 || s.x < -100 || s.x > w + 100 || s.y < -100 || s.y > h + 100) {
+      METEOR_SPARKS.splice(i, 1);
+    }
+  }
+}
+
+function drawMeteorSparks() {
+  for (let i = 0; i < METEOR_SPARKS.length; i++) {
+    const s = METEOR_SPARKS[i];
+
+    ctx.save();
+    ctx.globalAlpha = s.alpha;
+    ctx.fillStyle = s.color;
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = s.color;
+
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.size, 0, 2 * Math.PI);
+    ctx.fill();
+
+    ctx.restore();
+  }
+}
+
+function drawFieryMeteors() {
+  for (let i = 0; i < FIERY_METEORS.length; i++) {
+    const m = FIERY_METEORS[i];
+
+    const tailX = m.x - m.speedX * m.length;
+    const tailY = m.y - m.speedY * m.length;
+
+    // Gradient tail from red → orange → yellow
+    const gradient = ctx.createLinearGradient(m.x, m.y, tailX, tailY);
+    gradient.addColorStop(0, `rgba(255, 0, 0, ${m.alpha})`);
+    gradient.addColorStop(0.5, `rgba(255, 140, 0, ${m.alpha})`);
+    gradient.addColorStop(1, `rgba(255, 255, 50, 0)`);
+
+    ctx.save();
+    ctx.shadowBlur = 30;
+    ctx.shadowColor = "rgba(255, 150, 0, 0.9)";
+    ctx.strokeStyle = gradient;
+    ctx.lineWidth = 8;
+    ctx.beginPath();
+    ctx.moveTo(m.x, m.y);
+    ctx.lineTo(tailX, tailY);
+    ctx.stroke();
+    ctx.restore();
+
+    // Solid brown meteor head
+    ctx.save();
+    ctx.globalAlpha = m.alpha;
+    ctx.fillStyle = "rgb(110, 55, 30)";
+    ctx.shadowBlur = 40;
+    ctx.shadowColor = "rgba(90, 45, 25, 0.9)";
+    ctx.beginPath();
+    ctx.arc(m.x, m.y, 12, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.restore();
+  }
+}
+
 function animateStarfield() {
   ctx.clearRect(0, 0, w, h);
 
@@ -152,12 +294,22 @@ function animateStarfield() {
   if (Math.random() < SHOOTING_STAR_CHANCE) {
     spawnShootingStar();
   }
-
   updateShootingStars();
   drawShootingStars();
 
+  if (Math.random() < METEOR_SPAWN_CHANCE) {
+    spawnFieryMeteor();
+  }
+  updateFieryMeteors();
+  drawFieryMeteors();
+
+  updateMeteorSparks();
+  drawMeteorSparks();
+
   requestAnimationFrame(animateStarfield);
 }
+
+
 
 /*******************************************************
  * DOMContentLoaded
@@ -173,6 +325,10 @@ document.addEventListener("mousemove", (e) => {
     sparkle.remove();
   }, 700);
 });
+
+function isMobileDevice() {
+  return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   /*--------------------------------------
@@ -299,59 +455,88 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-const guardEl = document.getElementById('guard');
+
+if (!isMobileDevice()) {
+  // Only run guardian code if NOT mobile
+  const guardEl = document.getElementById('guard');
+
+  // Mouse and guard positions
+  let mouseX = 0, mouseY = 0;
+  let guardX = 200, guardY = 200; // Initial guard position
+  
+  // The no-go radius: guard will never get within this distance of the cursor
+  const MIN_DISTANCE = 50;
+  
+  // Rotation angle in degrees for the guard
+  let rotationAngle = 0;
+  
+  // Capture mouse coordinates on move
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.pageX;
+    mouseY = e.pageY;
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const targetText = "Heath Kavanagh";  // Final text
+    const letters = "⏃⏚☊⎅⟒⎎☌⊑⟟⟊☍⌰⋔⋏⍜⌿⍾⍀⌇⏁⎍⎐⍙⌖⊬⋉";
+    const nameElement = document.getElementById("nameTitle");
+
+    let iteration = 0;
+    let totalScrambleTime = targetText.length * 6; // Increase for a longer effect
+
+    let scrambleInterval = setInterval(() => {
+        nameElement.innerText = targetText
+            .split("")
+            .map((letter, index) => {
+                // Delay correct letters appearing
+                if (iteration > totalScrambleTime - targetText.length + index) {
+                    return targetText[index]; // Show correct letter
+                }
+                return letters[Math.floor(Math.random() * letters.length)]; // Scramble
+            })
+            .join("");
+
+        if (iteration >= totalScrambleTime) {
+            clearInterval(scrambleInterval); // Stop animation when complete
+        }
+        iteration += 1;
+    }, 75); // Adjust speed of scrambling (lower = faster changes)
+});
+  
+//  function animateGuard() {
+    requestAnimationFrame(animateGuard);
     
-    // Mouse and guard positions
-    let mouseX = 0, mouseY = 0;
-    let guardX = 200, guardY = 200; // Initial guard position (arbitrary)
+    // Calculate distance from guard to the mouse
+    const dx = mouseX - guardX;
+    const dy = mouseY - guardY;
+    const distance = Math.sqrt(dx * dx + dy * dy);
     
-    // The no-go radius: guard will never get within this distance of the cursor
-    const MIN_DISTANCE = 50; 
-    
-    // Rotation angle in degrees for the guard
-    let rotationAngle = 0;
-    
-    // Capture mouse coordinates on move
-    document.addEventListener('mousemove', (e) => {
-      mouseX = e.pageX;
-      mouseY = e.pageY;
-    });
-    
-    function animateGuard() {
-      requestAnimationFrame(animateGuard);
-      
-      // Calculate distance from guard to the mouse
-      const dx = mouseX - guardX;
-      const dy = mouseY - guardY;
-      const distance = Math.sqrt(dx * dx + dy * dy);
-      
-      // If guard is farther than MIN_DISTANCE, it moves closer
-      // (but stops exactly at MIN_DISTANCE from the cursor).
-      if (distance > MIN_DISTANCE) {
-        // Move speed per frame (adjust to taste)
-        const speed = 2;
-        
-        // How far the guard needs to move to get to exactly MIN_DISTANCE
-        const distBeyondRadius = distance - MIN_DISTANCE;
-        
-        // If we can't close the entire gap in one frame, move by `speed` only
-        const moveStep = Math.min(distBeyondRadius, speed);
-        
-        // Move guard along the line from guard -> mouse
-        const ratio = moveStep / distance;
-        guardX += dx * ratio;
-        guardY += dy * ratio;
-      }
-      // Otherwise (distance <= MIN_DISTANCE), guard stays put.
-      
-      // Constantly rotate clockwise
-      rotationAngle += 5; // degrees per frame (adjust for faster/slower spin)
-      
-      // Update the guard's position and rotation
-      guardEl.style.left = guardX + 'px';
-      guardEl.style.top = guardY + 'px';
-      guardEl.style.transform = `rotate(${rotationAngle}deg)`;
+    // If guard is farther than MIN_DISTANCE, move closer (but stop at MIN_DISTANCE)
+    if (distance > MIN_DISTANCE) {
+      const speed = 2;
+      const distBeyondRadius = distance - MIN_DISTANCE;
+      const moveStep = Math.min(distBeyondRadius, speed);
+      const ratio = moveStep / distance;
+      guardX += dx * ratio;
+      guardY += dy * ratio;
     }
     
-    // Start the loop
-    animateGuard();
+    // Constantly rotate clockwise
+    rotationAngle += 2;
+    
+    // Update the guard's position and rotation
+    guardEl.style.left = guardX + 'px';
+    guardEl.style.top = guardY + 'px';
+    guardEl.style.transform = `rotate(${rotationAngle}deg)`;
+//  }
+  
+  // Start the loop
+//  animateGuard();
+//} else {
+  // If on mobile, remove/hide the guardian element
+//  const guardEl = document.getElementById('guard');
+//  if (guardEl) {
+ //   guardEl.remove(); // Or guardEl.style.display = 'none';
+//  }
+}
+

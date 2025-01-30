@@ -420,3 +420,4 @@ footer a:hover::after, footer div > span:hover::after {
     height: 80px; /* Example size, adjust as you wish */
     pointer-events: none; /* So it doesn't block clicks */
   }
+
