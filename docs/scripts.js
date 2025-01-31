@@ -32,7 +32,7 @@ function createNormalStar() {
 
 /** Random colors for stars based on real astronomical colors */
 function getRandomStarColor() {
-  const colors = ["white", "lightblue", "white", "white", "white"];
+  const colors = ["white", "lightblue"];
   return colors[Math.floor(Math.random() * colors.length)];
 }
 
@@ -74,6 +74,242 @@ function drawStars() {
   ctx.globalAlpha = 1;
 }
 
+let PLANET_COUNT = 8; // Rare planets
+let PLANETS = [];     // Array to hold planets
+
+/** Create a planet with realistic properties */
+function createPlanet() {
+  return {
+    x: Math.random() * w,
+    y: Math.random() * h,
+    radius: Math.random() * 3 + 1.5, // Similar in size to stars
+    speed: Math.random() * 0.3 + 0.1, // Slower movement
+    color: getRandomPlanetColor(),
+    glowSize: Math.random() * 5 + 5, // Glow effect
+    twinkleSpeed: Math.random() * 0.01, // Slight twinkle
+    opacity: Math.random() * 0.5 + 0.5 // Initial opacity
+  };
+}
+
+/** Converts planet color to RGB values for glow effects */
+function getRGB(color) {
+  const colors = {
+      "#b35c1e": "179, 92, 30",  // Mars-like (Rusty Orange-Red)
+      "#2a3b8f": "42, 59, 143",  // Neptune-like (Deep Blue)
+      "#6e7051": "110, 112, 81", // Mercury-like (Grayish)
+      "#a6a57a": "166, 165, 122", // Venus-like (Pale Yellowish)
+      "#d4af37": "212, 175, 55", // Saturn-like (Golden Yellow)
+      "#745c48": "116, 92, 72",  // Io-like (Brownish)
+      "#4b6eaf": "75, 110, 175", // Ice Giant (Muted Blue)
+      "earth": "30, 144, 255"   // Earth-like (Ocean Blue)
+  };
+  return colors[color] || "255, 255, 255"; // Default to white
+}
+
+/** Random colors for planets */
+function getRandomPlanetColor() {
+  const colors = [
+      "#b35c1e",  // Mars-like (Rusty Orange-Red)
+      "#2a3b8f",  // Neptune-like (Deep Blue)
+      "#6e7051",  // Mercury-like (Grayish)
+      "#a6a57a",  // Venus-like (Pale Yellowish)
+      "earth",    // 🌍 Earth-like (special case)
+      "#d4af37",  // Saturn-like (Golden Yellow)
+      "#745c48",  // Io-like (Brownish)
+      "#4b6eaf"   // Ice Giant (Muted Blue)
+  ];
+  return colors[Math.floor(Math.random() * colors.length)];
+}
+
+/** Initialize all planets */
+function initPlanets() {
+  PLANETS = [];
+  for (let i = 0; i < PLANET_COUNT; i++) {
+    PLANETS.push(createPlanet());
+  }
+}
+
+/** Update planet positions & opacity for twinkling effect */
+function updatePlanets() {
+  for (let i = 0; i < PLANETS.length; i++) {
+    const p = PLANETS[i];
+    p.y += p.speed;
+    p.opacity += p.twinkleSpeed * (Math.random() > 0.5 ? 1 : -1);
+    p.opacity = Math.max(0.4, Math.min(1, p.opacity)); // Keep opacity in range
+
+    // If a planet moves beyond the bottom, respawn it at the top
+    if (p.y > h) {
+      PLANETS[i] = createPlanet();
+      PLANETS[i].y = 0;
+    }
+  }
+}
+
+/** Determines which planets should have rings */
+function shouldHaveRings(color) {
+  return color === "#d4af37" || // Saturn-like (Golden Yellow)
+         color === "#4b6eaf" || // Uranus-like (Muted Blue)
+         color === "#2a3b8f";   // Neptune-like (Deep Blue)
+}
+
+/** Draws elliptical rings around specific planets */
+function drawPlanetRings(planet) {
+    ctx.save();
+
+    ctx.globalAlpha = 0.5; // Semi-transparent rings
+    ctx.strokeStyle = `rgba(${getRGB(planet.color)}, 0.6)`; // Slight tint from planet color
+    ctx.lineWidth = planet.radius * 0.4; // Ring thickness
+
+    ctx.translate(planet.x, planet.y); // Move to planet position
+    ctx.rotate(Math.PI / 8); // Slight tilt for realism
+
+    ctx.beginPath();
+    ctx.ellipse(0, 0, planet.radius * 2.5, planet.radius * 1.2, 0, 0, Math.PI * 2);
+    ctx.stroke();
+
+    ctx.restore();
+}
+
+/** Draws an Earth-like planet with blue oceans, green land, and white clouds */
+function drawEarthTexture(planet) {
+  const gradient = ctx.createRadialGradient(
+      planet.x, planet.y, planet.radius * 0.3,
+      planet.x, planet.y, planet.radius
+  );
+
+  // Add ocean (blue), land (green), and mix
+  gradient.addColorStop(0, "#1e90ff"); // Deep blue (oceans)
+  gradient.addColorStop(0.4, "#228b22"); // Green (land)
+  gradient.addColorStop(0.7, "#1e90ff"); // More ocean
+  gradient.addColorStop(1, "#154360"); // Darker edges for depth
+
+  ctx.globalAlpha = planet.opacity;
+  ctx.fillStyle = gradient;
+  ctx.beginPath();
+  ctx.arc(planet.x, planet.y, planet.radius, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Add cloud layer (random white patches)
+  ctx.globalAlpha = 0.3; // Soft cloud transparency
+  ctx.fillStyle = "white";
+  for (let i = 0; i < 5; i++) { // Random small clouds
+      let cloudX = planet.x + (Math.random() - 0.5) * planet.radius * 1.2;
+      let cloudY = planet.y + (Math.random() - 0.5) * planet.radius * 1.2;
+      let cloudSize = Math.random() * planet.radius * 0.5;
+
+      ctx.beginPath();
+      ctx.arc(cloudX, cloudY, cloudSize, 0, Math.PI * 2);
+      ctx.fill();
+  }
+
+  ctx.globalAlpha = 1; // Reset transparency
+}
+
+/** Draw all planets */
+function drawPlanets() {
+  for (let i = 0; i < PLANETS.length; i++) {
+      const p = PLANETS[i];
+
+      ctx.save();
+
+      // Subtle glow effect
+      ctx.shadowBlur = p.glowSize;
+      ctx.shadowColor = `rgba(${getRGB(p.color)}, 0.3)`;
+
+      // If planet is "Earth-like", apply texture
+      if (p.color === "earth") {
+          drawEarthTexture(p);
+      } else {
+          // Draw solid planet
+          ctx.globalAlpha = p.opacity;
+          ctx.fillStyle = p.color;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fill();
+      }
+
+      // Draw rings for ringed planets
+      if (shouldHaveRings(p.color)) {
+          drawPlanetRings(p);
+      }
+
+      ctx.restore(); // Reset settings
+  }
+}
+
+let CONSTELLATION_CHANCE = 0.0005; // Probability of a constellation appearing each frame
+let CONSTELLATIONS = [];
+let CONSTELLATION_SPEED = 0.3; // Speed at which constellations move down
+
+/** Create a random constellation with stars connected by lines */
+function createConstellation() {
+  let numStars = Math.floor(Math.random() * 4) + 3; // 3 to 6 stars
+  let startX = Math.random() * w;
+  let startY = Math.random() * h * 0.6; // Prefer upper part of screen
+  let stars = [];
+
+  for (let i = 0; i < numStars; i++) {
+    let x = startX + (Math.random() - 0.5) * 100;
+    let y = startY + (Math.random() - 0.5) * 100;
+    stars.push({ x, y });
+  }
+
+  return {
+    stars,
+    alpha: 0, // Start invisible
+    fadeSpeed: Math.random() * 0.01 + 0.005, // Slow fade in
+  };
+}
+
+/** Update constellations, moving them down at a uniform speed */
+function updateConstellations() {
+  for (let i = CONSTELLATIONS.length - 1; i >= 0; i--) {
+    let constellation = CONSTELLATIONS[i];
+    if (constellation.alpha < 1) {
+      constellation.alpha += constellation.fadeSpeed;
+    }
+    
+    // Move all stars in the constellation downward
+    for (let star of constellation.stars) {
+      star.y += CONSTELLATION_SPEED;
+    }
+    
+    // Remove constellations that move off the screen
+    if (constellation.stars.every(star => star.y > h)) {
+      CONSTELLATIONS.splice(i, 1);
+    }
+  }
+}
+
+/** Draw constellations as stars connected by lines */
+function drawConstellations() {
+  ctx.globalAlpha = 0.6;
+  ctx.strokeStyle = "rgba(255,255,255,0.3)";
+  ctx.lineWidth = 1;
+
+  for (let constellation of CONSTELLATIONS) {
+    ctx.globalAlpha = constellation.alpha * 0.6; // Fade effect
+    ctx.beginPath();
+    for (let i = 0; i < constellation.stars.length - 1; i++) {
+      let starA = constellation.stars[i];
+      let starB = constellation.stars[i + 1];
+      ctx.moveTo(starA.x, starA.y);
+      ctx.lineTo(starB.x, starB.y);
+    }
+    ctx.stroke();
+
+    // Draw individual stars in constellation
+    ctx.fillStyle = "white";
+    for (let star of constellation.stars) {
+      ctx.globalAlpha = constellation.alpha;
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, 2, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+  ctx.globalAlpha = 1;
+}
+
 /*******************************************************
  * SHOOTING STARS
  *******************************************************/
@@ -81,26 +317,36 @@ function drawStars() {
  * Create a new shooting star from a random (x,y) near top-left or top-right,
  * traveling diagonally.
  */
+
+
 function spawnShootingStar() {
   const fromLeft = Math.random() < 0.5;
   const startX = fromLeft ? 0 : w;
   const startY = Math.random() * h * 0.5;
 
-  // Speed remains the same
-  const speedX = fromLeft ? Math.random() * 4 + 2 : -(Math.random() * 4 + 2);
-  const speedY = Math.random() * 2 + 1;
+  const baseSpeedX = fromLeft ? Math.random() * 4 + 2 : -(Math.random() * 4 + 2);
+  const baseSpeedY = Math.random() * 2 + 1;
 
-  // Larger length range, slower fade speed
-  SHOOTING_STARS.push({
-    x: startX,
-    y: startY,
-    speedX: speedX,
-    speedY: speedY,
-    length: Math.random() * 120 + 80, // 80 to 200
-    alpha: 1.0,
-    fadeSpeed: Math.random() * 0.003 + 0.003 // 0.003 to 0.006
-  });
+  const numStars = Math.random() < 0.3 ? Math.floor(Math.random() * 3) + 2 : 1; // 30% chance of a cluster (2-4 stars)
+
+  for (let i = 0; i < numStars; i++) {
+    const offsetX = (Math.random() - 0.5) * 20; // Slight variation in spawn position
+    const offsetY = (Math.random() - 0.5) * 20;
+    const speedX = baseSpeedX * (0.9 + Math.random() * 0.2); // Small variation in speed
+    const speedY = baseSpeedY * (0.9 + Math.random() * 0.2);
+
+    SHOOTING_STARS.push({
+      x: startX + offsetX,
+      y: startY + offsetY,
+      speedX: speedX,
+      speedY: speedY,
+      length: Math.random() * 120 + 80, // 80 to 200
+      alpha: 1.0,
+      fadeSpeed: Math.random() * 0.003 + 0.003 // 0.003 to 0.006
+    });
+  }
 }
+
 
 /** Update shooting star positions & remove them if off screen or faded */
 function updateShootingStars() {
@@ -145,24 +391,24 @@ function drawShootingStars() {
 // Fiery meteors
 let FIERY_METEORS = [];
 let METEOR_PARTICLES = [];
-let METEOR_SPAWN_CHANCE = 0.001;
+let METEOR_SPAWN_CHANCE = 0.0005;
 let METEOR_SPARKS = [];
 
 function spawnFieryMeteor() {
-  const fromTop = Math.random() < 0.5;
+  const fromLeft = Math.random() < 0.5;
   
   let startX, startY, speedX, speedY;
   
-  if (fromTop) {
-    startX = Math.random() * w;
-    startY = -100;
-    speedX = (Math.random() - 0.5) * 4;
-    speedY = Math.random() * 3 + 3;
+  if (fromLeft) {
+    startX = -100; // Start off-screen on the left
+    startY = Math.random() * h;
+    speedX = Math.random() * 3 + 3; // Moving right
+    speedY = (Math.random() - 0.5) * 4; // Random slight up/down movement
   } else {
-    startX = -100;
-    startY = Math.random() * (h * 0.7);
-    speedX = Math.random() * 3 + 3;
-    speedY = Math.random() * 2 + 1;
+    startX = w + 100; // Start off-screen on the right
+    startY = Math.random() * h;
+    speedX = -(Math.random() * 3 + 3); // Moving left
+    speedY = (Math.random() - 0.5) * 4; // Random slight up/down movement
   }
 
   FIERY_METEORS.push({
@@ -175,6 +421,7 @@ function spawnFieryMeteor() {
     fadeSpeed: Math.random() * 0.004 + 0.003
   });
 }
+
 
 function updateFieryMeteors() {
   for (let i = FIERY_METEORS.length - 1; i >= 0; i--) {
@@ -200,7 +447,7 @@ function spawnMeteorSparks(meteor) {
     const speed = Math.random() * 2 + 1;
 
     // Random spark colors: red, orange, yellow, and white
-    const colors = ["rgba(255, 50, 50, 1)", "rgba(255, 100, 0, 1)", "rgba(255, 200, 50, 1)", "rgb(42, 42, 35)"];
+    const colors = ["rgba(255, 50, 50, 1)", "rgba(255, 100, 0, 1)", "rgba(255, 200, 50, 1)", "rgb(42, 42, 35)", "rgb(84, 84, 84)"];
     const sparkColor = colors[Math.floor(Math.random() * colors.length)];
 
     METEOR_SPARKS.push({
@@ -248,6 +495,16 @@ function drawMeteorSparks() {
   }
 }
 
+function drawHeatDistortion(x, y, size) {
+  ctx.globalAlpha = 0.3;
+  ctx.fillStyle = "rgba(255,100,0,0.2)";
+  ctx.beginPath();
+  ctx.arc(x, y, size, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.globalAlpha = 1;
+}
+
+
 function drawFieryMeteors() {
   for (let i = 0; i < FIERY_METEORS.length; i++) {
     const m = FIERY_METEORS[i];
@@ -260,6 +517,11 @@ function drawFieryMeteors() {
     gradient.addColorStop(0, `rgba(255, 0, 0, ${m.alpha})`);
     gradient.addColorStop(0.5, `rgba(255, 140, 0, ${m.alpha})`);
     gradient.addColorStop(1, `rgba(255, 255, 50, 0)`);
+
+    for (let meteor of FIERY_METEORS) {
+      drawHeatDistortion(meteor.x, meteor.y, 25);
+    }
+    
 
     ctx.save();
     ctx.shadowBlur = 30;
@@ -285,6 +547,7 @@ function drawFieryMeteors() {
   }
 }
 
+
 function animateStarfield() {
   ctx.clearRect(0, 0, w, h);
 
@@ -305,6 +568,15 @@ function animateStarfield() {
 
   updateMeteorSparks();
   drawMeteorSparks();
+
+  updatePlanets();
+  drawPlanets();
+
+  if (Math.random() < CONSTELLATION_CHANCE) {
+    CONSTELLATIONS.push(createConstellation());
+  }
+  updateConstellations();
+  drawConstellations();
 
   requestAnimationFrame(animateStarfield);
 }
@@ -339,6 +611,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ctx = canvas.getContext("2d");
     resizeCanvas();
     initStars();
+    initPlanets();
     animateStarfield();
     window.addEventListener("resize", () => {
       resizeCanvas();
@@ -538,5 +811,6 @@ if (!isMobileDevice()) {
 //  if (guardEl) {
  //   guardEl.remove(); // Or guardEl.style.display = 'none';
 //  }
+
 }
 
