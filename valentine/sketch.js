@@ -3,7 +3,7 @@
  ****************************************************/
 
 // ==================== PASSWORD CHECK ====================
-const SECRET_PASSWORD = "mySecret"; // Change to whatever you want
+const SECRET_PASSWORD = "Valentine"; // Change to whatever you want
 
 function checkPassword() {
   const input = document.getElementById("passwordInput");
