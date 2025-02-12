@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Memory Fireflies</title>
+  <link rel="icon" href="data:,"> <!-- Prevents favicon request -->
+  <style>
+    body { 
+      margin: 0; 
+      overflow: hidden; 
+      font-family: 'Source Code Pro', monospace;
+      background: #141422;
+    }
+    
+    /* ==================== PASSWORD MODAL ===================== */
+    #passwordModal {
+      position: fixed;
+      top: 0; 
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000; /* Above everything else */
+    }
+    #passwordContent {
+      background: #1e1e2f;
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+      border: 2px solid rgba(255, 255, 150, 0.5);
+      box-shadow: 0 0 20px rgba(255, 255, 150, 0.4);
+      max-width: 80%;
+    }
+    #passwordContent p {
+      color: #fefefe;
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+    #passwordContent input {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 4px;
+      border: none;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    #passwordContent button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      background: #141422;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      box-shadow: 0 0 10px rgba(255, 255, 150, 0.3);
+    }
+    #passwordContent button:hover {
+      background: #333;
+    }
+    
+    /* ==================== MEMORY MODAL ===================== */
+    #memoryModal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    #memoryContent {
+      background: #1e1e2f;
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 80%;
+      text-align: center;
+      border: 2px solid rgba(255, 255, 150, 0.5);
+      box-shadow: 0 0 20px rgba(255, 255, 150, 0.4);
+    }
+    #memoryContent img {
+      max-width: 300px;
+      max-height: 300px;
+      width: auto;
+      height: auto;
+      display: block;
+      margin: 0 auto 15px auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(255, 255, 150, 0.3);
+    }
+    #spotifyContainer {
+      max-width: 300px;
+      margin: 0 auto 15px;
+      display: none;
+    }
+    #memoryContent p {
+      color: #fefefe;
+      font-size: 18px;
+      margin: 15px 0;
+      line-height: 1.4;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      background: #141422;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      box-shadow: 0 0 10px rgba(255, 255, 150, 0.3);
+    }
+    button:hover {
+      background: #333;
+    }
+    
+    /* ==================== HIDE APP CONTENT INITIALLY ===================== */
+    #appContent {
+      display: none; /* Hidden until correct password is entered */
+    }
+  </style>
+</head>
+<body>
+  
+  <!-- PASSWORD MODAL: visible by default until correct password is entered -->
+  <div id="passwordModal">
+    <div id="passwordContent">
+      <p>Please enter the password to view this page:</p>
+      <input type="password" id="passwordInput" placeholder="Enter Password">
+      <br/>
+      <button onclick="checkPassword()">Submit</button>
+    </div>
+  </div>
+  
+  <!-- THE ENTIRE APP CONTENT BELOW (HIDDEN BY DEFAULT) -->
+  <div id="appContent">
+    
+    <!-- Memory Modal -->
+    <div id="memoryModal">
+      <div id="memoryContent">
+        <div id="spotifyContainer"></div>
+        <img id="memoryPhoto" src="" alt="Memory Photo" style="display: none;">
+        <p id="memoryText"></p>
+        <button onclick="closeMemory()">Close</button>
+      </div>
+    </div>
+    
+    <!-- p5.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+    
+    <!-- Your app logic in a separate file -->
+    <script src="sketch.js"></script>
+  </div>
+
+</body>
+</html>
