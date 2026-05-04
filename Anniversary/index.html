@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>365 Days of Love: Our Anniversary</title>
+    <style>
+        :root {
+            --primary: #8e44ad;
+            --primary-light: #9b59b6;
+            --primary-dark: #6c3483;
+            --accent: #e056fd;
+            --light-purple: #d6b8f9;
+            --white: #ffffff;
+            --dark: #2c2c54;
+            --light: #f9f4ff;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.9; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            40% { transform: scale(1); }
+            60% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -100% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--accent), var(--primary-light));
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: white;
+            text-align: center;
+            padding: 100px 0 60px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: pulse 3s infinite;
+            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.3);
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .anniversary-badge {
+            background: var(--accent);
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .anniversary-badge::before {
+            content: '';
+            position: absolute;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            border: 2px dashed white;
+            animation: pulse 3s infinite;
+        }
+        
+        .anniversary-badge span {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin: 0;
+            font-weight: 700;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .tagline {
+            font-size: 1.5rem;
+            margin-top: 10px;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        section {
+            margin-bottom: 80px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+            animation: fadeInUp 1s ease-out forwards;
+        }
+        
+        h2 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, transparent, var(--accent), transparent);
+        }
+        
+        .intro {
+            text-align: center;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 60px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(142, 68, 173, 0.1);
+            position: relative;
+        }
+        
+        .intro::before {
+            content: '"';
+            position: absolute;
+            top: -30px;
+            left: 20px;
+            font-size: 5rem;
+            color: var(--light-purple);
+            font-family: serif;
+            opacity: 0.8;
+        }
+        
+        .intro::after {
+            content: '"';
+            position: absolute;
+            bottom: -60px;
+            right: 20px;
+            font-size: 5rem;
+            color: var(--light-purple);
+            font-family: serif;
+            opacity: 0.8;
+        }
+        
+        .chart-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(142, 68, 173, 0.15);
+            margin-bottom: 60px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .chart-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+        }
+        
+        .chart-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(142, 68, 173, 0.2);
+        }
+        
+        .chart-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        
+        .chart-description {
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            color: var(--dark);
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .comparison-item {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .comparison-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(142, 68, 173, 0.1) 0%, rgba(255, 255, 255, 0) 60%);
+            z-index: 0;
+        }
+        
+        .comparison-item:hover {
+            transform: translateY(-10px) rotate(1deg);
+            box-shadow: 0 15px 30px rgba(142, 68, 173, 0.2);
+        }
+        
+        .comparison-item h3 {
+            color: var(--primary);
+            margin-top: 0;
+            position: relative;
+            font-size: 1.3rem;
+        }
+        
+        .data-point {
+            font-size: 2.8rem;
+            font-weight: bold;
+            margin: 15px 0;
+            color: var(--dark);
+            position: relative;
+        }
+        
+        .data-label {
+            font-size: 0.95rem;
+            color: #666;
+            position: relative;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, var(--primary-light), var(--accent));
+            color: white;
+        }
+        
+        .highlight h3, .highlight .data-point, .highlight .data-label {
+            color: white;
+        }
+        
+        .highlight::before {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 60%);
+        }
+        
+        .conclusion {
+            text-align: center;
+            padding: 60px;
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: white;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(142, 68, 173, 0.3);
+        }
+        
+        .conclusion::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.2;
+        }
+        
+        .conclusion h2 {
+            color: white;
+        }
+        
+        .conclusion h2::after {
+            background: linear-gradient(to right, transparent, white, transparent); 
+        }
+        
+        .conclusion p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M0 38.59l2.83-2.83 1.41 1.41L1.41 40H0v-1.41zM0 20.83l2.83-2.83 1.41 1.41L1.41 22.24H0v-1.41zM0 3.07l2.83-2.83 1.41 1.41L1.41 4.48H0V3.07zm15.66 33.1l2.83-2.83 1.41 1.41-2.83 2.83h-1.41v-1.41zm0-17.76l2.83-2.83 1.41 1.41-2.83 2.83h-1.41V18.41zm0-17.76l2.83-2.83 1.41 1.41-2.83 2.83h-1.41V.65zM12.41 40l2.83-2.83 1.41 1.41L13.83 40h-1.42zm0-17.76l2.83-2.83 1.41 1.41-2.83 2.83h-1.42v-1.41zm0-17.76l2.83-2.83 1.41 1.41-2.83 2.83h-1.42V4.48zM28.24 40l2.83-2.83 1.41 1.41L29.66 40h-1.42zm0-17.76l2.83-2.83 1.41 1.41-2.83 2.83h-1.42v-1.41zm0-17.76l2.83-2.83 1.41 1.41-2.83 2.83h-1.42V4.48zM3.07 40l2.83-2.83 1.41 1.41L4.48 40H3.07zm0-17.76l2.83-2.83 1.41 1.41-2.83 2.83H3.07v-1.41zM3.07 4.48L5.9 1.65l1.41 1.41-2.83 2.83H3.07V4.48zm17.76 0l2.83-2.83 1.41 1.41-2.83 2.83h-1.41V4.48zm-17.76 12L5.9 13.65l1.41 1.41-2.83 2.83H3.07v-1.41zM20.83 16.41l2.83-2.83 1.41 1.41-2.83 2.83h-1.41v-1.41zm0 17.76l2.83-2.83 1.41 1.41-2.83 2.83h-1.41v-1.41z'%3E%3C/path%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        .heart-animation {
+            display: inline-block;
+            animation: heartbeat 1.5s ease-in-out infinite;
+            font-size: 2rem;
+            margin: 20px;
+        }
+        
+        .heart-grid {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+        }
+        
+        .button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, var(--accent), var(--primary-light));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 30px;
+            box-shadow: 0 10px 20px rgba(142, 68, 173, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        .button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(142, 68, 173, 0.4);
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 20px 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-light), var(--accent));
+            border-radius: 10px;
+        }
+        
+        .timeline-item {
+            position: relative;
+            width: calc(50% - 40px);
+            padding: 20px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            animation: fadeInUp 1s;
+            animation-fill-mode: both;
+            opacity: 0;
+            transition: transform 0.3s ease;
+        }
+        
+        .timeline-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .timeline-item:nth-child(odd) {
+            float: left;
+            clear: both;
+            transform-origin: right center;
+        }
+        
+        .timeline-item:nth-child(even) {
+            float: right;
+            clear: both;
+            transform-origin: left center;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            width: 20px;
+            height: 20px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px var(--primary-light), 0 0 0 8px rgba(142, 68, 173, 0.1);
+        }
+        
+        .timeline-item:nth-child(odd)::after {
+            right: -50px;
+        }
+        
+        .timeline-item:nth-child(even)::after {
+            left: -50px;
+        }
+        
+        .timeline-date {
+            font-size: 0.9rem;
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .timeline-title {
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin: 0 0 10px;
+        }
+        
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        
+        /* Animations for particles */
+        .particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: var(--light-purple);
+            border-radius: 50%;
+            opacity: 0.2;
+            pointer-events: none;
+        }
+        
+        /* Media Queries */
+        @media screen and (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .anniversary-badge {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .anniversary-badge span {
+                font-size: 2.5rem;
+            }
+            
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-item {
+                width: calc(100% - 60px);
+                float: right;
+                clear: both;
+                margin-left: 60px;
+            }
+            
+            .timeline-item::after {
+                left: -40px;
+            }
+            
+            .timeline-item:nth-child(odd)::after {
+                right: auto;
+                left: -40px;
+            }
+        }
+        #conclusion {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Optional: makes it take full viewport height */
+        }
+
+        .conclusion {
+            text-align: center;
+            max-width: 600px; /* Optional: prevents lines from being too long */
+            padding: 20px;
+        }
+        .conclusion h2 {
+            text-align: center !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+            display: block !important;
+            width: fit-content !important; /* Ensures the h2 doesn't stretch full width */
+        }       
+
+        .heart-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* space between hearts */
+        }
+    </style>
+</head>
+<body>
+    <div class="particles-container" id="particles"></div>
+    
+    <header>
+        <div class="stars" id="stars"></div>
+        <div class="header-content">
+            <div class="anniversary-badge">
+                <span>1</span>
+            </div>
+            <h1>365 Days of Us</h1>
+            <div class="tagline">A Scientific Love Story</div>
+            <p>My Heart Proves What My Words Can't Express</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <section id="intro" class="visible">
+            <div class="intro">
+                <p>For the past 365 days, you've been the rhythm to my heartbeat and the peace to my mind. As you know, I recently got a Garmin Forerunner 55 watch. However, what you didn't know was that I've also been using it to track how you physically change my body.</p>
+            </div>
+        </section>
+    
+        <section id="heart-rate">
+            <h2>My Heart Rate</h2>
+            <div class="chart-container">
+                <h3 class="chart-title">Heart Rate Comparison</h3>
+                <p class="chart-description">Here's what happens to my average heart rate in different situations:</p>
+                <canvas id="heartRateChart" width="400" height="200"></canvas>
+                <div class="chart-analysis">
+                    <p>When I see your face, my heart rate increases by an average of 12 BPM. That first moment when you walk into the room creates a spike that's even higher than my morning coffee!</p>
+                </div>
+            </div>
+            
+            <div class="comparison-grid">
+                <div class="comparison-item">
+                    <h3>Resting</h3>
+                    <div class="data-point">57 BPM</div>
+                    <div class="data-label">My baseline</div>
+                </div>
+                <div class="comparison-item">
+                    <h3>Caffeine</h3>
+                    <div class="data-point">+8 BPM</div>
+                    <div class="data-label">Not even close to you</div>
+                </div>
+                <div class="comparison-item">
+                    <h3>Music</h3>
+                    <div class="data-point">+5 BPM</div>
+                    <div class="data-label">My favorite songs</div>
+                </div>
+                <div class="comparison-item highlight">
+                    <h3>With You</h3>
+                    <div class="data-point">+12 BPM</div>
+                    <div class="data-label">Every single time</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="sleep">
+            <h2>My Sleep Quality</h2>
+            <div class="chart-container">
+                <h3 class="chart-title">Sleep Score Comparison</h3>
+                <p class="chart-description">My Garmin sleep score measurements reveal an interesting pattern:</p>
+                <canvas id="sleepChart" width="400" height="200"></canvas>
+                <div class="chart-analysis">
+                    <p>On days I see you, my sleep quality improves noticeably. I fall asleep faster, experience longer deep sleep phases, and wake up feeling more refreshed.</p>
+                </div>
+            </div>
+            
+            <div class="comparison-grid">
+                <div class="comparison-item">
+                    <h3>Regular Days</h3>
+                    <div class="data-point">72/100</div>
+                    <div class="data-label">Average sleep score</div>
+                </div>
+                <div class="comparison-item">
+                    <h3>After Exercise</h3>
+                    <div class="data-point">78/100</div>
+                    <div class="data-label">Good, but not the best</div>
+                </div>
+                <div class="comparison-item">
+                    <h3>With Music</h3>
+                    <div class="data-point">75/100</div>
+                    <div class="data-label">Calming, but limited</div>
+                </div>
+                <div class="comparison-item highlight">
+                    <h3>Days With You</h3>
+                    <div class="data-point">86/100</div>
+                    <div class="data-label">My best sleep comes after seeing you</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="stress">
+            <h2>My Stress Levels</h2>
+            <div class="chart-container">
+                <h3 class="chart-title">Stress Score Comparison</h3>
+                <p class="chart-description">Garmin measures stress on a scale from 0-100, with lower being better:</p>
+                <canvas id="stressChart" width="400" height="200"></canvas>
+                <div class="chart-analysis">
+                    <p>Nothing reduces my stress like spending time with you. Even my meditation app is jealous of your calming effects.</p>
+                </div>
+            </div>
+            
+            <div class="comparison-grid">
+                <div class="comparison-item">
+                    <h3>Normal Day</h3>
+                    <div class="data-point">45/100</div>
+                    <div class="data-label">Average stress level</div>
+                </div>
+                <div class="comparison-item">
+                    <h3>After Music</h3>
+                    <div class="data-point">38/100</div>
+                    <div class="data-label">Provides some relief</div>
+                </div>
+                <div class="comparison-item">
+                    <h3>After Exercise</h3>
+                    <div class="data-point">32/100</div>
+                    <div class="data-label">Good stress reduction</div>
+                </div>
+                <div class="comparison-item highlight">
+                    <h3>With You</h3>
+                    <div class="data-point">25/100</div>
+                    <div class="data-label">You're my best stress reliever</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="conclusion">
+            <div class="conclusion">
+                <h2>The Science of Us</h2>
+                <p>After weeks of collecting data, the results are crystal clear: you are the most positive influence in my life. My heart has only confirmed what my head already knew.</p>
+                <p>You elevate my heart rate in ways caffeine could never match.</p>
+                <p>You improve my sleep quality better than any wellness routine.</p>
+                <p>Your presence reduces my stress more effectively than music.</p>
+                
+                <div class="heart-grid">
+                    <div class="heart-animation">❤️</div>
+                    <div class="heart-animation" style="animation-delay: 0.5s;">❤️</div>
+                    <div class="heart-animation" style="animation-delay: 1s;">❤️</div>
+                </div>
+                
+                <p>Happy one year anniversary, my love. Here's to countless more years of making my heart race, my mind calm, and my life beautiful.</p>
+                
+                <p>I love you more than any data could ever show.</p>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <p>Created with love, science, and a Garmin Forerunner 55</p>
+        <p>Happy One Year Anniversary</p>
+        <div class="heart-animation" style="font-size: 3rem;">❤️</div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    
+    <script>
+        // Create random stars in the header
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 100;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.width = Math.random() * 3 + 'px';
+                star.style.height = star.style.width;
+                star.style.top = Math.random() * 100 + '%';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                star.style.animationDelay = Math.random() * 5 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // Create floating particles in the background
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random size
+                const size = Math.random() * 6 + 4;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                
+                // Random position
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.left = Math.random() * 100 + '%';
+                
+                // Random opacity
+                particle.style.opacity = Math.random() * 0.15 + 0.05;
+                
+                // Animation
+                particle.style.animation = `float ${Math.random() * 10 + 10}s linear infinite`;
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Scroll animation for sections
+        function handleScroll() {
+            const sections = document.querySelectorAll('section');
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            
+            // Reveal sections when scrolled into view
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                if (sectionTop < window.innerHeight - 100) {
+                    section.classList.add('visible');
+                }
+            });
+            
+            // Animate timeline items
+            timelineItems.forEach((item, index) => {
+                const itemTop = item.getBoundingClientRect().top;
+                if (itemTop < window.innerHeight - 50) {
+                    item.style.animationDelay = (index * 0.2) + 's';
+                    item.style.opacity = 1;
+                }
+            });
+        }
+        
+        // Create Heart Rate Chart
+        function createHeartRateChart() {
+            const ctx = document.getElementById('heartRateChart').getContext('2d');
+            
+            const heartRateChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Resting', 'With Coffee', 'With Music', 'With You'],
+                    datasets: [{
+                        label: 'Heart Rate (BPM)',
+                        data: [57, 65, 62, 69],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.5)',
+                            'rgba(153, 102, 255, 0.5)',
+                            'rgba(255, 159, 64, 0.5)',
+                            'rgba(224, 86, 253, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(224, 86, 253, 1)'
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `Heart Rate: ${context.raw} BPM`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            suggestedMax: 90,
+                            title: {
+                                display: true,
+                                text: 'Heart Rate (BPM)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Create Sleep Quality Chart
+        function createSleepChart() {
+            const ctx = document.getElementById('sleepChart').getContext('2d');
+            
+            const sleepChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Regular Days', 'After Exercise', 'With Music', 'Days With You'],
+                    datasets: [{
+                        label: 'Sleep Score',
+                        data: [72, 78, 75, 86],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.5)',
+                            'rgba(153, 102, 255, 0.5)',
+                            'rgba(255, 159, 64, 0.5)',
+                            'rgba(224, 86, 253, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(224, 86, 253, 1)'
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `Sleep Score: ${context.raw}/100`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            suggestedMax: 100,
+                            title: {
+                                display: true,
+                                text: 'Sleep Score (out of 100)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Create Stress Level Chart
+        function createStressChart() {
+            const ctx = document.getElementById('stressChart').getContext('2d');
+            
+            const stressChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Normal Day', 'After Music', 'After Exercise', 'With You'],
+                    datasets: [{
+                        label: 'Stress Score',
+                        data: [45, 38, 32, 25],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.5)',
+                            'rgba(255, 159, 64, 0.5)',
+                            'rgba(75, 192, 192, 0.5)',
+                            'rgba(224, 86, 253, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(224, 86, 253, 1)'
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `Stress Score: ${context.raw}/100`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            suggestedMax: 60,
+                            title: {
+                                display: true,
+                                text: 'Stress Score (lower is better)'
+                            },
+                            reverse: false
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Initialize everything when the page loads
+        window.addEventListener('DOMContentLoaded', () => {
+            createStars();
+            createParticles();
+            createHeartRateChart();
+            createSleepChart();
+            createStressChart();
+            
+            // Trigger scroll handler once to show initial elements
+            handleScroll();
+            
+            // Set up scroll event listener
+            window.addEventListener('scroll', handleScroll);
+        });
+    </script>
+</body>
+</html>
+    
